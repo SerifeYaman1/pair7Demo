@@ -1,4 +1,5 @@
 package com.tobeto.pair7Demo.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,18 +12,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Image {
-    @Column(name = "id")
+    @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "product_image")
-    private String productImage;
-    @Column(name = "category_image")
-    private String categoryImage;
-    @Column(name = "employee_photo")
-    private String employeePhoto;
-    @OneToOne(mappedBy = "imageId")
+
+    @Column(name="image_url")
+    private String imageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 }

@@ -1,27 +1,30 @@
 package com.tobeto.pair7Demo.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@Table(name="postal_codes")
+@Table(name="payment_card_informantions")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Postal {
-    @Column(name = "id")
+public class PaymentCard {
+    @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "customer_code")
-    private String customerCode;
-    @Column(name = "supplier_code")
-    private String supplierCode;
-    @OneToMany(mappedBy = "postal")
-    private List<Address> addresses;
+
+    @Column(name="card_no")
+    private String cardNo;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne(mappedBy = "paymentCard")
+    private Payment payment;
 }

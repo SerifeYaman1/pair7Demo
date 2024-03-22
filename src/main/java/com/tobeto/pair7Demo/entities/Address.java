@@ -1,4 +1,5 @@
 package com.tobeto.pair7Demo.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,45 +8,37 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Table(name="address")
+@Table(name="addresses")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Address {
+    @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "customer_address")
-    private String customerAddress;
-
-    @Column(name = "supplier_address")
-    private String supplierAddress;
-
-    @Column(name = "employee_address")
-    private String employeeAddress;
+    @Column(name="address")
+    private String address;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name="city_id")
     private City city;
 
     @ManyToOne
-    @JoinColumn(name = "country_id")
+    @JoinColumn(name="country_id")
     private Country country;
 
     @ManyToOne
-    @JoinColumn(name = "postal_id")
-    private Postal postal;
+    @JoinColumn(name="postal_id")
+    private PostalCode postalCode;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="user_id")
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
 
+    @OneToMany(mappedBy = "address")
+    private List<OrderDetail> orderDetails;
 }

@@ -1,4 +1,5 @@
 package com.tobeto.pair7Demo.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,21 +15,21 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Supplier {
+    @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
-    @Column(name = "company_name")
+
+    @Column(name="company_name")
     private String companyName;
-    @Column(name = "contact_name")
+
+    @Column(name="contact_name")
     private String contactName;
 
-    @OneToMany(mappedBy = "address")
-    private List<Address> address ;
+    @OneToMany(mappedBy ="supplier")
+    private List<ProductSupplier> productSuppliers;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Contact> contact ;
-
-    @OneToMany(mappedBy = "supplier")
-    private List<InformationsPayment> info ;
+    @OneToOne(mappedBy = "supplier")
+    private User user;
 }
+

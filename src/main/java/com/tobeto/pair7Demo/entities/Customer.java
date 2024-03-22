@@ -1,4 +1,5 @@
 package com.tobeto.pair7Demo.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,12 +21,11 @@ public class Customer {
     private int id;
 
     @OneToMany(mappedBy = "customer")
-    private List<InformationsPayment> info ;
+    private List<Order> orders;
 
+    @OneToMany (mappedBy = "customer")
+    private List<Payment> payments;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "customer")
     private User user;
-
-
 }

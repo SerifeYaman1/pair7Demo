@@ -1,4 +1,5 @@
 package com.tobeto.pair7Demo.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,22 +15,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class City {
-    @Column(name = "id")
+    @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "customer_city")
-    private String customerCity;
-
-    @Column(name = "supplier_city")
-    private String supplierCity;
+    @Column(name="city_name")
+    private String cityName;
 
     @OneToMany(mappedBy = "city")
     private List<Address> addresses;
 
     @ManyToOne
-    @JoinColumn(name = "country_id")
+    @JoinColumn(name="country_id")
     private Country country;
-
 }

@@ -8,27 +8,21 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Table(name="categories")
+@Table(name="postal_codes")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class PostalCode {
     @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="name")
-    private String name;
+    @Column(name="code")
+    private int code;
 
-    @Column(name="is_active")
-    private boolean isActive;
-
-    @OneToMany(mappedBy = "category")
-    private List<Image> images;
-
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    @OneToMany(mappedBy = "postalCode")
+    private List<Address> addresses;
 }

@@ -14,30 +14,36 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class User {
     @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="e_first_name")
-    private String eFirstName;
-    @Column(name="e_last_name")
-    private String eLastName;
-    @Column(name="c_first_name")
-    private String cFirstName;
-    @Column(name="c_last_name")
-    private String cLastName;
-    @OneToOne
-    @JoinColumn(name="contact_id")
-    private Contact contact;
+
+    @Column(name="first_name")
+    private String firstName;
+
+    @Column(name="last_name")
+    private String lastName;
+
     @OneToMany(mappedBy = "user")
-    private List<Address> address;
+    private List<Address> addresses;
+
+    @OneToMany(mappedBy = "user")
+    private List<Contact> contacts;
+
+    @OneToMany(mappedBy = "user")
+    private List<PaymentCard> paymentCards;
+
     @OneToOne
-    @JoinColumn(name="images_id")
-    private Image images;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @OneToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 }
-
-
-
-
