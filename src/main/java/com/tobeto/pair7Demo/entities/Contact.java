@@ -25,11 +25,11 @@ public class Contact {
     private String supMail;
     @Column(name = "cus_mail")
     private String cusMail;
-
     @Column(name = "e_phone")
-    private City ePhone;
-
+    private String ePhone;
     @Column(name = "e_mail")
-    private City eMail;
+    private String eMail;
+    @OneToOne(mappedBy = "contact")
+    private User user;
 
 }

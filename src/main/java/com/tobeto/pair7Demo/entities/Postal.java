@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Table(name="postal_codes")
 @Entity
 @Getter
@@ -20,4 +22,6 @@ public class Postal {
     private String customerCode;
     @Column(name = "supplier_code")
     private String supplierCode;
+    @OneToMany(mappedBy = "postal")
+    private List<Address> addresses;
 }

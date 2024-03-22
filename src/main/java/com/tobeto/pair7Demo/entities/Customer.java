@@ -7,29 +7,25 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Table(name="cities")
+@Table(name="customers")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class City {
-    @Column(name = "id")
+public class Customer {
+    @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "customer_city")
-    private String customerCity;
+    @OneToMany(mappedBy = "customer")
+    private List<InformationsPayment> info ;
 
-    @Column(name = "supplier_city")
-    private String supplierCity;
-
-    @OneToMany(mappedBy = "city")
-    private List<Address> addresses;
 
     @ManyToOne
-    @JoinColumn(name = "country_id")
-    private Country country;
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 }
