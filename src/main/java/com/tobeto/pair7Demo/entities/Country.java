@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Country {
+
     @Column(name="id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
