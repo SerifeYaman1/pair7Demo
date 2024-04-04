@@ -1,5 +1,7 @@
 package com.tobeto.pair7Demo.service.concretes;
 
+import com.tobeto.pair7Demo.core.utils.exceptions.types.BusinessException;
+import com.tobeto.pair7Demo.entities.Category;
 import com.tobeto.pair7Demo.entities.User;
 import com.tobeto.pair7Demo.repositories.UserRepository;
 import com.tobeto.pair7Demo.service.abstacts.UserService;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServisImpl implements UserService {
@@ -23,6 +26,8 @@ public class UserServisImpl implements UserService {
 
     @Override
     public AddUserResponse add(UserAddRequest request) {
+
+        userWithSameNameShouldNotExist(request.getFirstName());
 
         User user = new User();
         user.setFirstName(request.getFirstName());
@@ -71,9 +76,11 @@ public class UserServisImpl implements UserService {
 
     }
 
-    private void method(String name){
-        //TODO repositorye ekleme
-//        if(name.getFirst_name().length() <3)
-//            throw new RuntimeException("Kullanıcı adı en az 3 haneli olmalıdır");
+    private void userWithSameNameShouldNotExist(String userName)
+    {
+        Optional<User> userWithSameName = userRepository.findByFirstNameIgnoreCase(userName);
+
+        if(userWithSameName.isPresent())
+            throw new BusinessException("Aynı isimde kullanıcı var. Lütfen kullanıcı adını değiştiriniz.");
     }
 }
