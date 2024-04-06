@@ -27,9 +27,6 @@ public class OrderDetail {
     @Column(name="quantity")
     private int quantity;
 
-    @OneToMany(mappedBy="orderDetail")
-    private List<Product> products;
-
     @OneToOne
     @JoinColumn(name = "payment_id")
     private Payment payment;
@@ -41,4 +38,11 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
+
+    @ManyToMany
+    @JoinTable(name="od_product",joinColumns =
+    @JoinColumn(name="order_detail_id"), inverseJoinColumns =
+    @JoinColumn(name="product_id"))
+    private List<Product> products;
 }

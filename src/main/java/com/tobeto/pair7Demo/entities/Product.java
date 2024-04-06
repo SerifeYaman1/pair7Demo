@@ -38,10 +38,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Image> images;
 
-    @ManyToOne
-    @JoinColumn(name = "order_detail_id")
-    private OrderDetail orderDetail;
-
     @OneToMany(mappedBy ="product")
     private List<ProductSupplier> productSuppliers;
 
@@ -49,4 +45,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToMany(mappedBy="products")
+    private List<OrderDetail> orderDetails;
 }

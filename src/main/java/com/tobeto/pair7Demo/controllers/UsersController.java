@@ -31,9 +31,9 @@ public class UsersController {
         return userService.getById(id);
     }
     @PostMapping
-    public AddUserResponse add(@RequestBody @Valid UserAddRequest request){
+    public void add(@RequestBody @Valid UserAddRequest request){
 
-return userService.add(request);
+    userService.add(request);
     }
     @PutMapping
     public void update(@RequestBody User user) {

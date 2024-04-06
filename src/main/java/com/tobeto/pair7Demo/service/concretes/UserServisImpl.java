@@ -1,13 +1,12 @@
 package com.tobeto.pair7Demo.service.concretes;
 
 import com.tobeto.pair7Demo.core.utils.exceptions.types.BusinessException;
-import com.tobeto.pair7Demo.entities.Category;
 import com.tobeto.pair7Demo.entities.User;
 import com.tobeto.pair7Demo.repositories.UserRepository;
 import com.tobeto.pair7Demo.service.abstacts.UserService;
 import com.tobeto.pair7Demo.service.dto.requests.UserAddRequest;
-import com.tobeto.pair7Demo.service.dto.responses.AddUserResponse;
 import com.tobeto.pair7Demo.service.dto.responses.UserListingResponse;
+import com.tobeto.pair7Demo.service.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,19 +24,14 @@ public class UserServisImpl implements UserService {
 
 
     @Override
-    public AddUserResponse add(UserAddRequest request) {
+    public void add(UserAddRequest request) {
 
         userWithSameNameShouldNotExist(request.getFirstName());
 
-        User user = new User();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-
-        User savedUser = userRepository.save(user);
-        AddUserResponse response = new AddUserResponse(savedUser.getId(), savedUser.getFirstName(), savedUser.getLastName());
-
-        return response;
+        User user = UserMapper.INSTANCE.userFromAddRequest(request);
+        userRepository.save(user);
     }
+
 
     @Override
     public void update(User user) {
