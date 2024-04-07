@@ -1,21 +1,26 @@
 package com.tobeto.pair7Demo.service.abstacts;
 
 import com.tobeto.pair7Demo.entities.User;
-import com.tobeto.pair7Demo.service.dto.requests.UserAddRequest;
-import com.tobeto.pair7Demo.service.dto.responses.UserListingResponse;
+import com.tobeto.pair7Demo.service.dto.requests.user.AddUserRequest;
+import com.tobeto.pair7Demo.service.dto.requests.user.DeleteUserRequest;
+import com.tobeto.pair7Demo.service.dto.requests.user.UpdateUserRequest;
+import com.tobeto.pair7Demo.service.dto.responses.product.GetByIdProductResponse;
+import com.tobeto.pair7Demo.service.dto.responses.user.AddUserResponse;
+import com.tobeto.pair7Demo.service.dto.responses.user.GetAllUserResponse;
+import com.tobeto.pair7Demo.service.dto.responses.user.GetByIdUserResponse;
 
 import java.util.List;
 
 public interface UserService {
 
-   void add(UserAddRequest request);
+   AddUserResponse add(AddUserRequest request);
 
-   void update(User user);
+   void update(UpdateUserRequest request);
 
-   void delete(int id);
+   void delete(DeleteUserRequest request);
 
-   List<UserListingResponse> getAll();
+   List<GetAllUserResponse> getAll();
 
-   User getById(int id);
+   GetByIdUserResponse getById(int id);
 
 }

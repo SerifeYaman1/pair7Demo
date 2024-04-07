@@ -2,9 +2,12 @@ package com.tobeto.pair7Demo.controllers;
 
 import com.tobeto.pair7Demo.entities.User;
 import com.tobeto.pair7Demo.service.abstacts.UserService;
-import com.tobeto.pair7Demo.service.dto.requests.UserAddRequest;
-import com.tobeto.pair7Demo.service.dto.responses.AddUserResponse;
-import com.tobeto.pair7Demo.service.dto.responses.UserListingResponse;
+import com.tobeto.pair7Demo.service.dto.requests.user.AddUserRequest;
+import com.tobeto.pair7Demo.service.dto.requests.user.DeleteUserRequest;
+import com.tobeto.pair7Demo.service.dto.requests.user.UpdateUserRequest;
+import com.tobeto.pair7Demo.service.dto.responses.user.AddUserResponse;
+import com.tobeto.pair7Demo.service.dto.responses.user.GetAllUserResponse;
+import com.tobeto.pair7Demo.service.dto.responses.user.GetByIdUserResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,32 +22,32 @@ public class UsersController {
         this.userService = userService;
     }
 
-    @GetMapping("/users/getAll")
-    public List<UserListingResponse>  getAll(){
+    @GetMapping
+    public List<GetAllUserResponse> getAll(){
 
         return userService.getAll();
     }
 
-    @GetMapping("/users/getById")
-    public User getById(int id){
+    @GetMapping("/{id}")
+    public GetByIdUserResponse getById(int id){
 
         return userService.getById(id);
     }
     @PostMapping
-    public void add(@RequestBody @Valid UserAddRequest request){
+    public AddUserResponse add(@RequestBody @Valid AddUserRequest request){
 
-    userService.add(request);
+    return userService.add(request);
     }
     @PutMapping
-    public void update(@RequestBody User user) {
+    public void update(@RequestBody UpdateUserRequest request) {
 
-        userService.update(user);
+        userService.update(request);
     }
 
     @DeleteMapping
-    public void delete(@RequestParam int id) {
+    public void delete(@RequestParam DeleteUserRequest request) {
 
-        userService.delete(id);
+        userService.delete(request);
     }
 
 

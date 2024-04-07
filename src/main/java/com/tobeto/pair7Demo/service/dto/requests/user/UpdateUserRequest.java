@@ -1,21 +1,15 @@
-package com.tobeto.pair7Demo.service.dto.responses;
-
+package com.tobeto.pair7Demo.service.dto.requests.user;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-
-public class UserListingResponse {
-
+public class UpdateUserRequest {
     private int id;
     private String firstName;
     private String lastName;
-
+    private String email;
 }

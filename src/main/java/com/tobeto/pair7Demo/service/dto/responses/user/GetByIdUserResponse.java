@@ -1,4 +1,4 @@
-package com.tobeto.pair7Demo.service.dto.responses;
+package com.tobeto.pair7Demo.service.dto.responses.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddUserResponse {
+public class GetByIdUserResponse {
     private int id;
     private String firstName;
     private String lastName;
