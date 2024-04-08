@@ -1,10 +1,7 @@
 package com.tobeto.pair7Demo.service.abstacts;
 
-import com.tobeto.pair7Demo.entities.User;
 import com.tobeto.pair7Demo.service.dto.requests.user.AddUserRequest;
-import com.tobeto.pair7Demo.service.dto.requests.user.DeleteUserRequest;
 import com.tobeto.pair7Demo.service.dto.requests.user.UpdateUserRequest;
-import com.tobeto.pair7Demo.service.dto.responses.product.GetByIdProductResponse;
 import com.tobeto.pair7Demo.service.dto.responses.user.AddUserResponse;
 import com.tobeto.pair7Demo.service.dto.responses.user.GetAllUserResponse;
 import com.tobeto.pair7Demo.service.dto.responses.user.GetByIdUserResponse;
@@ -17,7 +14,7 @@ public interface UserService {
 
    void update(UpdateUserRequest request);
 
-   void delete(DeleteUserRequest request);
+   void delete(int id);
 
    List<GetAllUserResponse> getAll();
 

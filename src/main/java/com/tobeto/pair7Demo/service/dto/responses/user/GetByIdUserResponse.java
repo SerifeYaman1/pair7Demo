@@ -12,5 +12,10 @@ import lombok.Setter;
 public class GetByIdUserResponse {
     private int id;
     private String firstName;
+
     private String lastName;
+
+    private String email; //TODO mapperlarken contact ile yap
+
+    private String password;
 }

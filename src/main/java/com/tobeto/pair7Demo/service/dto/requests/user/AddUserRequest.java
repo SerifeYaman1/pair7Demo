@@ -1,5 +1,6 @@
 package com.tobeto.pair7Demo.service.dto.requests.user;
 
+import com.tobeto.pair7Demo.entities.UserType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -14,8 +15,13 @@ import lombok.Setter;
 
 
 public class AddUserRequest {
-    @NotBlank(message = "Kullanıcı adı ve soyadı boş bırakılmamalı.")
-    @Size(min = 3,max = 20)
     private String firstName;
+
     private String lastName;
+
+    private String email; //TODO mapperlarken contact ile yap
+
+    private String password;
+
+    private UserType userType;
 }

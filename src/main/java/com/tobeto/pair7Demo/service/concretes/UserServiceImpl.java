@@ -5,7 +5,6 @@ import com.tobeto.pair7Demo.entities.User;
 import com.tobeto.pair7Demo.repositories.UserRepository;
 import com.tobeto.pair7Demo.service.abstacts.UserService;
 import com.tobeto.pair7Demo.service.dto.requests.user.AddUserRequest;
-import com.tobeto.pair7Demo.service.dto.requests.user.DeleteUserRequest;
 import com.tobeto.pair7Demo.service.dto.requests.user.UpdateUserRequest;
 import com.tobeto.pair7Demo.service.dto.responses.user.AddUserResponse;
 import com.tobeto.pair7Demo.service.dto.responses.user.GetAllUserResponse;
@@ -44,19 +43,17 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(request.getId());
         if (userOptional.isPresent()) {
             User userToUpdate = userOptional.get();
-            // Güncelleme isteğine göre kullanıcı bilgilerini güncelle
-            userToUpdate.setFirstName(request.getFirstName());
-            // Diğer alanları da güncelleme işlemi burada yapabilirsiniz
-            userRepository.save(userToUpdate);
+            User updateUser = UserMapper.INSTANCE.userFromUpdateRequest(request);
+            userRepository.save(updateUser);
         } else {
             throw new RuntimeException("Kullanıcı bulunamadı.");
         }
     }
 
     @Override
-    public void delete(DeleteUserRequest request) {
+    public void delete(int id) {
 
-        User user = userRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException("id bulunamadı"));
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("id bulunamadı"));
         userRepository.delete(user);
     }
 
@@ -69,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
         for (User user :
                 users) {
-            GetAllUserResponse dto = new GetAllUserResponse(user.getId(), user.getFirstName(), user.getLastName());
+            GetAllUserResponse dto = UserMapper.INSTANCE.userToGetAllResponse(user);
             result.add(dto);
 
         }
@@ -80,10 +77,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            GetByIdUserResponse response = new GetByIdUserResponse();
-            response.setId(user.getId());
-            response.setFirstName(user.getFirstName());
-            // Diğer özelliklerinizi de ekleme işlemini burada yapabilirsiniz.
+            GetByIdUserResponse response = UserMapper.INSTANCE.userToGetById(user);
             return response;
         } else {
             throw new RuntimeException("Kullanıcı id'si bulunamadı.");

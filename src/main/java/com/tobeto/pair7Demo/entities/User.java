@@ -23,8 +23,12 @@ public class User {
     @Column(name="first_name")
     private String firstName;
 
+    private String password;
     @Column(name="last_name")
     private String lastName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type")
+    private UserType userType;
 
     @OneToMany(mappedBy = "user")
     private List<Address> addresses;
