@@ -26,7 +26,7 @@ public class UpdateProductRequest {
 
     private boolean isActive;
 
-    private List<Image> images;
+    //TODO images eklencek
 
-    private Category category;
+    private int categoryId;
 }

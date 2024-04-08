@@ -2,13 +2,13 @@ package com.tobeto.pair7Demo.service.dto.responses.product;
 
 import com.tobeto.pair7Demo.entities.Category;
 import com.tobeto.pair7Demo.entities.Image;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Min;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddProductResponse {
@@ -18,15 +18,15 @@ public class AddProductResponse {
     private String name;
 
     private String description;
-
+    @Min(value = 0,message = "Ürün fıyatı negatif olmaz.")
     private double unitPrice;
-
+    @Min(value = 0,message = "Stock miktarı en az 0 girilebilir.")
     private int unitsInStock;
 
     private boolean isActive;
 
-    private List<Image> images;
+   //TODO images eklenecek
 
-    private Category category;
+    private String categoryName;
 
 }

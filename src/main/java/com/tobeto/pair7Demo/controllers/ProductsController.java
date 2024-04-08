@@ -1,11 +1,8 @@
 package com.tobeto.pair7Demo.controllers;
 
-import com.tobeto.pair7Demo.entities.Product;
 import com.tobeto.pair7Demo.service.abstacts.ProductService;
 import com.tobeto.pair7Demo.service.dto.requests.product.AddProductRequest;
-import com.tobeto.pair7Demo.service.dto.requests.product.DeleteProductRequest;
 import com.tobeto.pair7Demo.service.dto.requests.product.UpdateProductRequest;
-import com.tobeto.pair7Demo.service.dto.requests.user.AddUserRequest;
 import com.tobeto.pair7Demo.service.dto.responses.product.AddProductResponse;
 import com.tobeto.pair7Demo.service.dto.responses.product.GetAllProductResponse;
 import com.tobeto.pair7Demo.service.dto.responses.product.GetByIdProductResponse;
@@ -24,30 +21,31 @@ public class ProductsController {
         this.productService = productService;
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
    public List<GetAllProductResponse> getAll(){
 
         return productService.getAll();
     }
 
-    @GetMapping("/{id}")
-    public GetByIdProductResponse getById(int id){
+    @GetMapping("/getbyid/{id}")
+    public GetByIdProductResponse getById(@PathVariable("id") int id){
+
         return productService.getById(id);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public AddProductResponse add(@RequestBody @Valid AddProductRequest request){
         return productService.add(request);
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public void update(@RequestBody UpdateProductRequest request){
         productService.update(request);
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam DeleteProductRequest request){
-        productService.delete(request);
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable("id") int id){
+        productService.delete(id);
     }
 
 }

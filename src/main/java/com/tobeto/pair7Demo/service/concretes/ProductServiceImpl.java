@@ -1,10 +1,10 @@
 package com.tobeto.pair7Demo.service.concretes;
 
+import com.tobeto.pair7Demo.core.utils.exceptions.types.BusinessException;
 import com.tobeto.pair7Demo.entities.Product;
 import com.tobeto.pair7Demo.repositories.ProductRepository;
 import com.tobeto.pair7Demo.service.abstacts.ProductService;
 import com.tobeto.pair7Demo.service.dto.requests.product.AddProductRequest;
-import com.tobeto.pair7Demo.service.dto.requests.product.DeleteProductRequest;
 import com.tobeto.pair7Demo.service.dto.requests.product.UpdateProductRequest;
 import com.tobeto.pair7Demo.service.dto.responses.product.AddProductResponse;
 import com.tobeto.pair7Demo.service.dto.responses.product.GetAllProductResponse;
@@ -28,31 +28,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public AddProductResponse add(AddProductRequest request) {
+        productWithSameNameShouldNotExits(request.getName());
 
         Product product = ProductMapper.INSTANCE.productFromAddRequest(request);
         Product savedProduct=productRepository.save(product);
-        return ProductMapper.INSTANCE.productToAddResponse(savedProduct);
+        AddProductResponse response = ProductMapper.INSTANCE.productToAddResponse(savedProduct);
+        return  response;
     }
 
 
     @Override
     public void update(UpdateProductRequest request) {
-        Optional<Product> productOptional = productRepository.findById(request.getId());
-        if (productOptional.isPresent()) {
-            Product productToUpdate = productOptional.get();
-            // Güncelleme isteğine göre kullanıcı bilgilerini güncelle
-            productToUpdate.setName(request.getName());
-            // Diğer alanları da güncelleme işlemi burada yapabilirsiniz
-            productRepository.save(productToUpdate);
+        Optional<Product> optionalProduct = productRepository.findById(request.getId());
+        if (optionalProduct.isPresent()) {
+            Product productToUpdate = optionalProduct.get();
+            Product updatedProduct = ProductMapper.INSTANCE.productFromUpdateRequest(request);
+            productRepository.save(updatedProduct);
         } else {
-            throw new RuntimeException("Kullanıcı bulunamadı.");
+            throw new BusinessException("Ürün bulunamadı.");
         }
     }
 
     @Override
-    public void delete(DeleteProductRequest request) {
+    public void delete(int id) {
 
-        Product product = productRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException("id bulunamadı"));
+        Product product = productRepository.findById(id).orElseThrow(() -> new BusinessException("id bulunamadı"));
         productRepository.delete(product);
     }
 
@@ -65,29 +65,30 @@ public class ProductServiceImpl implements ProductService {
 
         for (Product product :
                 products) {
-            GetAllProductResponse dto = new GetAllProductResponse
-                    (product.getId(), product.getName(), product.getDescription(),product.getUnitPrice(),
-                            product.getUnitsInStock(),product.isActive(),product.getImages(),product.getCategory()
-                            );
+            GetAllProductResponse dto = ProductMapper.INSTANCE.productToGetAllResponse(product);
             result.add(dto);
 
         }
         return result;
     }
+
     @Override
     public GetByIdProductResponse getById(int id) {
         Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
-            GetByIdProductResponse response = new GetByIdProductResponse();
-            response.setId(product.getId());
-            response.setName(product.getName());
-            // Diğer özelliklerinizi de ekleme işlemini burada yapabilirsiniz.
+            GetByIdProductResponse response = ProductMapper.INSTANCE.productToGetByIdResponse(product);
             return response;
         } else {
             throw new RuntimeException("Kullanıcı id'si bulunamadı.");
         }
     }
 
+    private void productWithSameNameShouldNotExits(String productName){
+        Optional<Product> productWithSameName = productRepository.findByNameIgnoreCase(productName);
+        if(productWithSameName.isPresent()){
+            throw new BusinessException("Aynı isimde 2 ürün olamaz.");
+        }
+    }
 
 }

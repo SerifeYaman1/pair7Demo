@@ -25,7 +25,7 @@ public class GetByIdProductResponse {
 
     private boolean isActive;
 
-    private List<Image> images;
+    //TODO images eklenecek
 
-    private Category category;
+    private String categoryName;
 }
